@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Heures réalisées par société et par semaine",
+    "query": "-- Heures réalisées par société et par semaine\nSELECT \n    COALESCE(o.firm_description, 'Non affecté (externe/visiteur)') AS societe,\n    strftime('%Y', t.result_date) AS annee,\n    strftime('%W', t.result_date) AS semaine,\n    SUM(t.hours) AS heures_theoriques_planifiees_selon_contrat,\n    SUM(t.physical_hours) AS heures_physiques_reellement_travaillees,\n    SUM(t.days) AS somme_jours_travail_ensemble_salaries,\n    COUNT(DISTINCT t.employee_key) AS nombre_salaries\nFROM kelio_resultat_total t\nLEFT JOIN kelio_organigramme o ON t.section_key = o.section_key\nWHERE t.account_type = 'ACCOUNT'\n    AND t.result_date >= '2024-01-01'\nGROUP BY societe, annee, semaine\nORDER BY (o.firm_description IS NULL), societe, annee DESC, semaine DESC;"
+  },
+  {
+    "name": "Absences par type par société et par semaine",
+    "query": "-- Absences par type par société et par semaine\nSELECT \n    COALESCE(o.firm_description, 'Non affecté (externe/visiteur)') AS societe,\n    a.type_abbreviation AS type_absence_abreviation,\n    a.type_description AS type_absence_description,\n    strftime('%Y', a.start_date) AS annee,\n    strftime('%W', a.start_date) AS semaine,\n    SUM(a.total_in_days) AS total_jours_absence,\n    SUM(a.total_in_hours) AS total_heures_absence,\n    COUNT(DISTINCT a.employee_key) AS nombre_salaries_concernes\nFROM kelio_absence_fiche a\nLEFT JOIN (\n    SELECT employee_key, section_key\n    FROM kelio_resultat_total\n    WHERE section_key IS NOT NULL\n    GROUP BY employee_key\n) emp ON a.employee_key = emp.employee_key\nLEFT JOIN kelio_organigramme o ON emp.section_key = o.section_key\nWHERE a.start_date >= '2024-01-01'\nGROUP BY societe, a.type_abbreviation, a.type_description, annee, semaine\nORDER BY (o.firm_description IS NULL), societe, annee DESC, semaine DESC, type_absence_abreviation;"
+  }
+]

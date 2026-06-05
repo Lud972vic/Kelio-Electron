@@ -1,0 +1,71 @@
+{
+  "name": "kelio-desktop",
+  "version": "1.0.0",
+  "description": "Application desktop locale Kelio - extraction SOAP, stockage SQLite, export CSV",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "rebuild": "cd node_modules/better-sqlite3 && HOME=~/.electron-gyp npx node-gyp rebuild --release --target=$(cat ../../node_modules/electron/dist/version) --arch=arm64 --dist-url=https://electronjs.org/headers",
+    "rebuild:win": "npx @electron/rebuild -f -w better-sqlite3",
+    "build:win": "npm run rebuild:win && electron-builder --win --x64",
+    "build:win32": "npm run rebuild:win && electron-builder --win --ia32"
+  },
+  "keywords": [
+    "kelio",
+    "desktop",
+    "electron",
+    "sqlite"
+  ],
+  "author": "ALDI Kelio",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@electron/rebuild": "^3.7.1",
+    "electron": "^39.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "fr.aldi.kelio-desktop",
+    "productName": "Kelio en Electron - Poc Ludovic",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false,
+      "signDlls": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": [
+        "fr_FR"
+      ],
+      "language": "1036"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "db/**/*",
+      "src/**/*",
+      "renderer/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
+    ]
+  },
+  "dependencies": {
+    "sql.js": "^1.14.1"
+  }
+}
