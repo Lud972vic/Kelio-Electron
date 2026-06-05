@@ -4,6 +4,8 @@
 
 Application desktop **100% locale** pour extraire, stocker et consulter les données Kelio via ses Web Services SOAP — sans serveur, sans PHP, sans larmes (ou presque).
 
+<img width="2560" height="1664" alt="Capture d’écran du 2026-06-05 14-46-34" src="https://github.com/user-attachments/assets/59cab26a-258f-432e-894d-52c4c67fbca1" />
+
 [![Made with Electron](https://img.shields.io/badge/Made%20with-Electron-47848F?logo=electron)](https://www.electronjs.org/)
 [![SQLite inside](https://img.shields.io/badge/DB-SQLite%20(sql.js)-003B57?logo=sqlite)](https://sql.js.org/)
 [![Vanilla JS](https://img.shields.io/badge/UI-Vanilla%20JS-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
@@ -171,7 +173,7 @@ KelioDesktop/
 
 **Ludovic** — ALDI Kelio POC
 
-> *"J'ai remplacé un serveur par un fichier. Ça tourne. Je rentre chez moi."*
+> *"J'ai remplacé un serveur par un fichier. Ça tourne. Bravo."*
 
 ---
 
